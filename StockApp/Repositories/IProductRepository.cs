@@ -6,7 +6,7 @@ namespace StockApp.Repositories
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Product>> GetAllProductsAsync();
+        Task<IEnumerable<Product>> GetProductsAsync(int page, int pageSize);
         Task<Product> GetProductByIdAsync(int id);
         Task AddProductAsync(Product product);
         Task UpdateProductAsync(Product product);
