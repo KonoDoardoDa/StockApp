@@ -1,4 +1,16 @@
-﻿@model IEnumerable<StockApp.Models.Product>
+﻿@using Microsoft.EntityFrameworkCore.Infrastructure
+@model PagedResult<Product>
+
+<!-- ddl itens por pagina -->
+<form method="get">
+    <label>Itens por página: </label>
+    <select>
+        <option value="10" selected="@(Model.PageSize == 10 ? "selected" : null)">10</option>
+        <option value="20" selected="@(Model.PageSize == 20 ? "selected" : null)">20</option>
+        <option value="50" selected="@(Model.PageSize == 50 ? "selected" : null)">50</option>
+    </select>
+    <input type="hidden" name="page" value="1" />
+</form>
 
 @{
     ViewData["Title"] = "Lista de produtos";
@@ -8,28 +20,42 @@
 
 <table class="table table-striped table-hover">
     <thead class="table-dark">
-        <tr>
-            <th>Código</th>
-            <th>Descrição</th>
-            <th>Quantidade</th>
-            <th>Ações</th>
-        </tr>
+    <tr>
+        <th>Código</th>
+        <th>Descrição</th>
+        <th>Quantidade</th>
+        <th>Ações</th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var product in Model)
-        {
-            <tr>
-                <td>@product.ProductId</td>
-                <td>@product.Description</td> 
-                <td>@product.Quantity</td>
-                <td>
-                    <a class="btn btn-info btn-sm" asp-controller="Product" asp-action="Details" asp-route-id="@product.ProductId">👁️ Ver</a>
-                    <a class="btn btn-info btn-sm" asp-controller="Product" asp-action="Edit" asp-route-id="@product.ProductId">✏️ Editar</a>
-                    <a class="btn btn-info btn-sm" asp-controller="Product" asp-action="Delete" asp-route-id="@product.ProductId">🗑️ Excluir</a>
-                </td>
-            </tr>
-        }
+    @foreach (var product in Model.Items)
+    {
+        <tr>
+            <td>@product.ProductId</td>
+            <td>@product.Description</td> 
+            <td>@product.Quantity</td>
+            <td>
+                <a class="btn btn-info btn-sm" asp-controller="Product" asp-action="Details" asp-route-id="@product.ProductId">👁️ Ver</a>
+                <a class="btn btn-info btn-sm" asp-controller="Product" asp-action="Edit" asp-route-id="@product.ProductId">✏️ Editar</a>
+                <a class="btn btn-info btn-sm" asp-controller="Product" asp-action="Delete" asp-route-id="@product.ProductId">🗑️ Excluir</a>
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
 
-<a class="btn btn-primary" asp-controller="Product" asp-action="Create">➕ Adicionar novo componente</a>
+<!-- Controles de Paginação -->
+<div>
+    @if (Model.CurrentPage > 1)
+    {
+        <a asp-action="Index" asp-route-page="@(Model.CurrentPage - 1)" asp-route-pageSize="@Model.PageSize">Anterior</a>
+    }
+    
+    Página @Model.CurrentPage de @Model.TotalPages
+    
+    @if (Model.CurrentPage < Model.TotalPages)
+    {
+        <a asp-action="Index" asp-route-page="@(Model.CurrentPage + 1)" asp-route-pagesize="@Model.PageSize">Próxima</a>
+    }
+</div>
+    <a class="btn btn-primary" asp-controller="Product" asp-action="Create">➕ Adicionar novo componente</a>

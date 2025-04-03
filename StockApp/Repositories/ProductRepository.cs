@@ -16,7 +16,7 @@ namespace StockApp.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Product>> GetProductsAsync(int page, int pageSize)
+        public async Task<PagedResult<Product>> GetPagedAsync(int page, int pageSize)
         {
             var totalItems = await _context.Products.CountAsync();
             var items =  await _context.Products
@@ -24,13 +24,13 @@ namespace StockApp.Repositories
                                         .Skip((page - 1) * pageSize)
                                         .Take(pageSize)
                                         .ToListAsync();
-            return new PagedProducts<Product>
+            return new PagedResult<Product>
             {
                 Items = items,
                 TotalItems = totalItems,
                 PageSize = pageSize,
                 CurrentPage = page
-            }
+            };
         }
     }
 }
