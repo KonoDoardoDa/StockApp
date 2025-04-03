@@ -29,6 +29,6 @@ app.UseRouting();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"); // Mapeando a rota padr�o para o controlador e a��o
+    pattern: "{controller=Home}/{action=Index}/{id?}"); // Mapeando a rota padrão para o controlador e ação
 
 app.Run();
