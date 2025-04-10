@@ -3,19 +3,11 @@ using StockApp.Data;
 using StockApp.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using X.PagedList.Extensions;
 
 namespace StockApp.Repositories
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository(DbContextStock _context) : IProductRepository
     {
-        private readonly DbContextStock _context;
-
-        public ProductRepository(DbContextStock context)
-        {
-            _context = context;
-        }
-
         public async Task<PagedResult<Product>> GetPagedAsync(int page, int pageSize)
         {
             var totalItems = await _context.Products.CountAsync();
@@ -24,6 +16,7 @@ namespace StockApp.Repositories
                                         .Skip((page - 1) * pageSize)
                                         .Take(pageSize)
                                         .ToListAsync();
+                                                                                                              
             return new PagedResult<Product>
             {
                 Items = items,
@@ -32,5 +25,22 @@ namespace StockApp.Repositories
                 CurrentPage = page
             };
         }
+
+        public async Task<List<Product>> SearchAsync(string? productId, int? providerId, string? description)
+        {
+            var query = _context.Products.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(productId))
+                query = query.Where(p => p.ProductId.Contains(productId));
+            
+            if (providerId.HasValue)
+                query = query.Where(p => p.ProviderId == providerId.Value);
+            
+            if (!string.IsNullOrWhiteSpace(description))
+                query = query.Where(p => p.Description.Contains(description));
+
+            return await query.ToListAsync();
+        }
+        
     }
 }

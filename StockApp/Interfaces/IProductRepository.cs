@@ -7,9 +7,9 @@ namespace StockApp.Repositories
     public interface IProductRepository
     {
         Task<PagedResult<Product>> GetPagedAsync(int page, int pageSize);
-        // Task<Product> GetProductByIdAsync(int id);
-        // Task AddProductAsync(Product product);
+        Task<List<Product?>> SearchAsync(string? productId = null, int? providerId = null, string? description = null);
+        Task AddProductAsync(Product product);
         // Task UpdateProductAsync(Product product);
-        // Task DeleteProductAsync(int id);
+        // Task DeleteProductAsync(string Productid);
     }
 }

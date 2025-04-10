@@ -2,15 +2,22 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using MySql.EntityFrameworkCore.Extensions;
 using StockApp.Data;
+using StockApp.Interfaces;
 using StockApp.Repositories;
+using StockApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+// DbContext
 builder.Services.AddDbContext<DbContextStock>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Repositorios
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+// Serviços
+builder.Services.AddScoped<IProductService, ProductService>();
+
 
 // Adicionando suporte ao MVC e adicionar o serviço ao contêiner
 builder.Services.AddControllersWithViews();
