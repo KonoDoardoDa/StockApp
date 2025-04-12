@@ -1,0 +1,27 @@
+@model StockApp.Models.Product
+
+<h2>Cadastrar Produto</h2>
+
+<form asp-action="Create" method="post">
+        <div class="form-group">
+                <label asp-for="ProductId"></label>
+                <input asp-for="ProductId" class="form-control" />
+        </div>
+        
+        <div class="form-group">
+                <label asp-for="Description"></label>
+                <input asp-for="Description" class="form-control" />
+        </div>
+
+        <div class="form-group">
+                <label asp-for="Quantity"></label>
+                <input asp-for="Quantity" class="form-control" />
+        </div>
+        
+        <div class="form-group">
+                <label asp-for="ProviderId"></label>
+                <input asp-for="ProviderId" class="form-control" />
+        </div>
+        
+        <button type="submit" class="btn btn-primary mt-2">Salvar</button>
+</form>

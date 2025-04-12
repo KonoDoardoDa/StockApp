@@ -31,13 +31,13 @@ namespace StockApp.Repositories
             var query = _context.Products.AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(productId))
-                query = query.Where(p => p.ProductId.Contains(productId));
+                query = query.Where(p => p.ProductId.ToLower().Contains(productId.ToLower()));
             
             if (providerId.HasValue)
                 query = query.Where(p => p.ProviderId == providerId.Value);
             
             if (!string.IsNullOrWhiteSpace(description))
-                query = query.Where(p => p.Description.Contains(description));
+                query = query.Where(p => p.Description.ToLower().Contains(description.ToLower()));
 
             return await query.ToListAsync();
         }
@@ -45,6 +45,14 @@ namespace StockApp.Repositories
         public async Task AddProductAsync(Product product)
         {
             await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteProductAsync(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            _context.Products.Remove(product);
             await _context.SaveChangesAsync();
         }
     }

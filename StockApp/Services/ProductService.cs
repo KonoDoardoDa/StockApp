@@ -15,5 +15,9 @@ public class ProductService(IProductRepository _repository) : IProductService
     {
         return await _repository.SearchAsync(productId, providerId, description);
     }
-    
+
+    public async Task AddProductAsync(Product product)
+    {
+        await _repository.AddProductAsync(product);
+    }
 }

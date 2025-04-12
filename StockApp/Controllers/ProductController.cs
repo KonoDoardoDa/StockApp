@@ -2,6 +2,7 @@
 using StockApp.Data;
 using StockApp.Interfaces;
 using StockApp.Services;
+using StockApp.Models;
 
 namespace StockApp.Controllers
 {
@@ -17,6 +18,22 @@ namespace StockApp.Controllers
         {
             var results = await _productService.SearchAsync(productId, providerId, description);
             return View(results);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Product product)
+        {
+            if (!ModelState.IsValid)
+                return View(product);
+            
+            await _productService.AddProductAsync(product);
+            return RedirectToAction("Index");
         }
     }
 }

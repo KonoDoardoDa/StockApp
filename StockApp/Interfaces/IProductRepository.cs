@@ -10,6 +10,6 @@ namespace StockApp.Repositories
         Task<List<Product?>> SearchAsync(string? productId = null, int? providerId = null, string? description = null);
         Task AddProductAsync(Product product);
         // Task UpdateProductAsync(Product product);
-        // Task DeleteProductAsync(string Productid);
+        Task DeleteProductAsync(int id);
     }
 }
