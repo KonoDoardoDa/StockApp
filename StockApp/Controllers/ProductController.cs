@@ -35,5 +35,15 @@ namespace StockApp.Controllers
             await _productService.AddProductAsync(product);
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _productService.DeleteProductAsync(id);
+
+            TempData["SuccesMessage"] = "Produto excluído com sucesso!";
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

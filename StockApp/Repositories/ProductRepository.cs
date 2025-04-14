@@ -48,6 +48,11 @@ namespace StockApp.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<Product> GetByIdAsync(int id)
+        {
+            await _context.Products.FindAsync(id);
+        }
+
         public async Task DeleteProductAsync(int id)
         {
             var product = await _context.Products.FindAsync(id);

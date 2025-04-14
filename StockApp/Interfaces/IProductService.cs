@@ -8,5 +8,5 @@ public interface IProductService
     Task<List<Product>> SearchAsync(string? productId = null, int? providerId = null, string? description = null);
     Task AddProductAsync(Product product);
     // Task UpdateProductAsync(Product product);
-    // Task DeleteProductAsync(int id);
+    Task DeleteProductAsync(int id);
 }
