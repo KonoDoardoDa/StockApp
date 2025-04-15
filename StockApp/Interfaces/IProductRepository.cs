@@ -8,7 +8,7 @@ namespace StockApp.Repositories
     {
         Task<PagedResult<Product>> GetPagedAsync(int page, int pageSize);
         Task<List<Product?>> SearchAsync(string? productId = null, int? providerId = null, string? description = null);
-        Task GetByIdAsync(int id);
+        Task<Product> GetByIdAsync(int id);
         Task AddProductAsync(Product product);
         // Task UpdateProductAsync(Product product);
         Task DeleteProductAsync(int id);
