@@ -48,7 +48,7 @@ namespace StockApp.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Product> GetByIdAsync(int id)
+        public async Task GetByIdAsync(int id)
         {
             await _context.Products.FindAsync(id);
         }
