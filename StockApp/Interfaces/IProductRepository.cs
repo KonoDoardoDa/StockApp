@@ -11,6 +11,6 @@ namespace StockApp.Repositories
         Task<Product> GetByIdAsync(int id);
         Task AddProductAsync(Product product);
         // Task UpdateProductAsync(Product product);
-        Task DeleteProductAsync(int id);
+        Task DeleteProductAsync(Product product);
     }
 }
