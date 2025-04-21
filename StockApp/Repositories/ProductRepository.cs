@@ -3,6 +3,7 @@ using StockApp.Data;
 using StockApp.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using StockApp.DTOs;
 
 namespace StockApp.Repositories
 {
@@ -51,6 +52,18 @@ namespace StockApp.Repositories
         public async Task<Product> GetByIdAsync(int id)
         {
             return await _context.Products.FindAsync(id);
+        }
+
+        public async Task<bool> EditProductAsync(EditProductDTO editDto)
+        {
+            var product = _context.Products.FindAsync(editDto.ProductId);
+            if (product == null)
+                return false;
+
+            // if (!string.IsNullOrWhiteSpace(editDto.Description))
+                // product. = editDto.Description;
+
+
         }
 
         public async Task DeleteProductAsync(Product product)

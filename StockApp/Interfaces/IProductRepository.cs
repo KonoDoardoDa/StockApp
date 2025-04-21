@@ -1,6 +1,7 @@
 ﻿using StockApp.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using StockApp.DTOs;
 
 namespace StockApp.Repositories
 {
@@ -10,7 +11,7 @@ namespace StockApp.Repositories
         Task<List<Product?>> SearchAsync(string? productId = null, int? providerId = null, string? description = null);
         Task<Product> GetByIdAsync(int id);
         Task AddProductAsync(Product product);
-        // Task UpdateProductAsync(Product product);
+        Task<bool> EditProductAsync(EditProductDTO editDto);
         Task DeleteProductAsync(Product product);
     }
 }
