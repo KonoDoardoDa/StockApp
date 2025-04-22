@@ -1,3 +1,4 @@
+using StockApp.DTOs;
 using StockApp.Interfaces;
 using StockApp.Models;
 using StockApp.Repositories;
@@ -28,5 +29,13 @@ public class ProductService(IProductRepository _repository) : IProductService
             throw new ArgumentException($"Produto: {product.ProductId} não encontrado.");
         
         await _repository.DeleteProductAsync(product);
+    }
+
+    public async Task EditProductAsync(EditProductDTO editDto)
+    {
+        var succes = await _repository.EditProductAsync(editDto);
+
+        if (!succes)
+            throw new ArgumentException($"Produto com id: {editDto.ProductId} não encontrado.");
     }
 }

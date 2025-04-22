@@ -56,13 +56,18 @@ namespace StockApp.Repositories
 
         public async Task<bool> EditProductAsync(EditProductDTO editDto)
         {
-            var product = _context.Products.FindAsync(editDto.ProductId);
+            var product = await _context.Products.FindAsync(editDto.ProductId);
             if (product == null)
                 return false;
 
-            // if (!string.IsNullOrWhiteSpace(editDto.Description))
-                // product. = editDto.Description;
+            if (!string.IsNullOrWhiteSpace(editDto.Description))
+                product.Description = editDto.Description;
 
+            if (editDto.Quantity.HasValue)
+                product.Quantity = editDto.Quantity.Value;
+
+            await _context.SaveChangesAsync();
+            return true;    
 
         }
 
